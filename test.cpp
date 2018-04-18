@@ -75,6 +75,21 @@ class double_llist{
       }
       cout<<"Element Inserted"<<endl;
     }
+    int * return_the_landmarks(int pos){
+      struct node *tmp, *q;
+      int i;
+      static int arr[2];
+      q = start;
+      /*θα πηγαίνει στο στοιχέιο που θέλουμε δηλάδη το επόμενο απο την θέση που θελουμε να ελένξουμε και θα επιστρέφει σε πινακα
+      2 στοιχειων τους ακέραιους αριθμους που αντιστοιχουν στο προηγουημενο και στο τρέχων στοιχείο */
+      for(i=0;i <=pos ; i++){
+        q = q->next;
+      }
+      tmp = q->prev;
+      arr[0]=tmp->info;
+      arr[1]=q->info;
+      return arr;
+    }
     void delete_element(int value){//Διάγραψε το πρώτο στοιχείο αντικείμενο με value
       struct node *tmp, *q;
        /*first element deletion*/
@@ -210,13 +225,14 @@ class double_llist{
 }*/
 
 int main(){
-  int x;
-  for(int i = 1;i<=2;i++){
-    double_llist test;
-    test.create_list(i);
-    test.add_begin(i);
-    x = test.display_dlist();
-    cout<<x<<endl;
-    }
-
+  double_llist test;
+  test.create_list(4);
+  test.add_begin(3);
+  test.add_begin(2);
+  test.add_begin(1);
+  test.add_begin(0);
+  test.display_dlist();
+  int *p;
+  p = test.return_the_landmarks(2);
+  cout<<*(p+0)<<" "<<*(p+1)<<endl;
 }

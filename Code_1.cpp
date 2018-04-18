@@ -3,6 +3,7 @@
 #include <sstream>
 #include<cstdio>
 #include<cstdlib>
+#include<cmath>
 using namespace std;
 
 /*struct node{
@@ -55,6 +56,7 @@ using namespace std;
 //Διπλά συνδεδεμένη Λίστα
 class double_llist{
      public:
+
      void create_list(int value){//Δημιουργεί την λίστα
        struct node *s, *temp;
        temp = new(struct node);
@@ -72,6 +74,7 @@ class double_llist{
            temp->prev = s;
        }
      }
+
      void add_begin(int value){//Προσθήκη στην αρχή
        if (start == NULL) {
            cout<<"First Create the list."<<endl;
@@ -86,6 +89,23 @@ class double_llist{
        start = temp;
        cout<<"Element Inserted"<<endl;
      }
+
+     int * return_the_landmarks(int pos){
+       struct node *tmp, *q;
+       int i;
+       static int arr[2];
+       q = start;
+       /*θα πηγαίνει στο στοιχέιο που θέλουμε δηλάδη το επόμενο απο την θέση που θελουμε να ελένξουμε και θα επιστρέφει σε πινακα
+       2 στοιχειων τους ακέραιους αριθμους που αντιστοιχουν στο προηγουημενο και στο τρέχων στοιχείο */
+       for(i=0;i <=pos ; i++){
+         q = q->next;
+       }
+       tmp = q->prev;
+       arr[0]=tmp->info;
+       arr[1]=q->info;
+       return arr;
+     }
+
      void add_after(int value, int pos){//Προσθήκα στον μετα απο το pos στην σειρα στοιχειο
        if (start == NULL){
            cout<<"First Create the list."<<endl;
@@ -115,8 +135,8 @@ class double_llist{
            q->next = tmp;
            tmp->prev = q;
        }
-       cout<<"Element Inserted"<<endl;
      }
+
      void delete_element(int value){//Διάγραψε το πρώτο στοιχείο αντικείμενο με value
        struct node *tmp, *q;
         /*first element deletion*/
@@ -141,7 +161,6 @@ class double_llist{
            }
            q = q->next;
        }
-        /*last element deleted*/
        if (q->next->info == value) {
            tmp = q->next;
            free(tmp);
@@ -151,6 +170,7 @@ class double_llist{
        }
        cout<<"Element "<<value<<" not found"<<endl;
      }
+
      void display_dlist(){//Εμφάνισε όλα τα αντικείμενα
        struct node *q;
        if (start == NULL){
@@ -165,6 +185,7 @@ class double_llist{
        }
        cout<<"NULL"<<endl;
      }
+
      void count(){//Συνολίκα αντικέιμενα
        struct node *q = start;
        int cnt = 0;
@@ -243,21 +264,64 @@ class tourist{
 float ofelos(float b,float apostasi_qi,float meso_xronos,float apostasi_ir,float apostasi_qr){
   return b/(apostasi_qi+meso_xronos+apostasi_ir-apostasi_qr);
 }
+
 int main(){
+  float meg_ofelos=-122;
   tourist elias;
   elias.read_the_file(); //Φτίαχνει τους πίνακες για το αντικείμενο elias
+  int total_landmarks = elias.see_tourista(3);
   int numbers_of_tours = elias.see_tourista(1);
   int start_day = elias.see_tourista(2);
   int diathesimi_wra = elias.see_hotel(6) - elias.see_hotel(5);
-  for(int i = 0;i <= numbers_of_tours;i++){//θα φτιαξει λιστε και θα τα βάζει σε πίνακες
-    double_llist test;
-    test.create_list(i);
-    test.add_begin(i);
-    test.display_dlist();
+  //for(int i = 0;i <= numbers_of_tours;i++){//θα φτιαξει λιστε και θα τα βάζει σε πίνακες
+    double_llist dromologia;
+    dromologia.create_list(1);
+    dromologia.add_begin(2);
+    dromologia.add_begin(3);
+    dromologia.display_dlist();
+    int landamarks_to_see = total_landmarks;
+    int z = 0;
+
+        /*σκοπος ειναι να βαζει δρομολόγια μεχρι να diathesimi_wra na ginei 0 η να ειναι αδύνατο να πάει σε αλλα αξιοθέτα
+        το flag θα γίνει false όταν δεν θα μπορέσει να βάλει αλλα δρομολόγια*/
+    while (diathesimi_wra != 0 || flag = FALSE ) {
+      //πιθανες θέσεις ειναι ολα τα αντικειμενα της λιστα -1
+      int pithanes_thesis = dromologia.count() - 1;
+      for(pithanes_thesis; pithanes_thesis<=1;pithanes_thesis--)
+      landmark = dromologia.return_the_landmarks(pithenes_thesis);
+      /*Θα αναζητήση πιο αξιοθεατο ειναι καταληλότερο για να μπει στην θεση pithenes_thesis και οταν τελείωσει την επαναληψη και βρει το καταλληλοτερο αφου
+      πρωτα δει ολες τις θεσεις.Αυτο θα γινει φτιαχνοντας μια μεταβλητη η οποια οταν το οφελος ειναι μεγαλυτερο απο το προηγουμενο αντικαταστει την μεχρι
+      προτινος καταχωρηση*/
+      for(int z = 0;z >= total_landmarks;z++){
+      int *landmark;
+      int q = *(landmark+0);
+      int r = *(landmark+1);
+      if (q == 0){
+        float apostasi_qi = sqrt(abs(( pow(elias.see_landmark(z,1),2) - pow(elias.see_hotel(q,2),2) ) + ( pow(elias.see_landmark(z,2),2) - pow(elias.see_hotel(q,2),2 ) ) ) );
+        float apostasi_ir = sqrt(abs(( pow(elias.see_landmark(r,1),2) - pow(elias.see_landmark(z,2),2) ) + ( pow(elias.see_landmark(r,2),2) - pow(elias.see_landmark(z,2),2 ) ) ) );
+        float apostasi_qr = sqrt(abs(( pow(elias.see_landmark(r,1),2) - pow(elias.see_hotel(q,2),2) ) + ( pow(elias.see_landmark(r,2),2) - pow(elias.see_hotel(q,2),2 ) ) ) );
+      }
+      else if(r == 0){
+        float apostasi_qi = sqrt(abs(( pow(elias.see_landmark(z,1),2) - pow(elias.see_landmark(q,2),2) ) + ( pow(elias.see_landmark(z,2),2) - pow(elias.see_landmark(q,2),2 ) ) ) );
+        float apostasi_ir = sqrt(abs(( pow(elias.see_hotel(r,1),2) - pow(elias.see_landmark(z,2),2) ) + ( pow(elias.see_hotel(r,2),2) - pow(elias.see_landmark(z,2),2 ) ) ) );
+        float apostasi_qr = sqrt(abs(( pow(elias.see_hotel(r,1),2) - pow(elias.see_landmark(q,2),2) ) + ( pow(elias.see_hotel(r,2),2) - pow(elias.see_landmark(q,2),2 ) ) ) );
+      }
+      else if(q == 0 && r==0){
+        float apostasi_qi = sqrt(abs(( pow(elias.see_landmark(z,1),2) - pow(elias.see_hotel(q,2),2) ) + ( pow(elias.see_landmark(z,2),2) - pow(elias.see_hotel(q,2),2 ) ) ) );
+        float apostasi_ir = sqrt(abs(( pow(elias.see_hotel(r,1),2) - pow(elias.see_landmark(z,2),2) ) + ( pow(elias.see_hotel(r,2),2) - pow(elias.see_landmark(z,2),2 ) ) ) );
+        float apostasi_qr = sqrt(abs(( pow(elias.see_hotel(r,1),2) - pow(elias.see_hotel(q,2),2) ) + ( pow(elias.see_hotel(r,2),2) - pow(elias.see_hotel(q,2),2 ) ) ) );
+      }
+      else{
+      float apostasi_qi = sqrt(abs(( pow(elias.see_landmark(z,1),2) - pow(elias.see_landmark(q,2),2) ) + ( pow(elias.see_landmark(z,2),2) - pow(elias.see_landmark(q,2),2 ) ) ) );
+      float apostasi_ir = sqrt(abs(( pow(elias.see_landmark(r,1),2) - pow(elias.see_landmark(z,2),2) ) + ( pow(elias.see_landmark(r,2),2) - pow(elias.see_landmark(z,2),2 ) ) ) );
+      float apostasi_qr = sqrt(abs(( pow(elias.see_landmark(r,1),2) - pow(elias.see_landmark(q,2),2) ) + ( pow(elias.see_landmark(r,2),2) - pow(elias.see_landmark(q,2),2 ) ) ) );
+      }
+      float ofelos_z = ofelos(elias.see_landmark(z,4),apostasi_qi,elias.see_landmark(z,3),apostasi_ir,apostasi_qr);
+      if(meg_ofelos<=ofelos_z){
+        meg_ofelos = ofelos_z;
+        mallon_thesi = pithanes_thesis;
+      }
+      }
     }
-    /*σκοπος ειναι να βαζει δρομολόγια μεχρι να diathesimi_wra na ginei 0 η να ειναι αδύνατο να πάει σε αλλα αξιοθέτα
-    το flag θα γίνει false όταν δεν θα μπορέσει να βάλει αλλα δρομολόγια*/
-  //  while (diathesimi_wra = 0 || flag = FALSE){
-    //}
   return 0;
 }
